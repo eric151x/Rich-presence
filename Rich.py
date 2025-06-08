@@ -1,13 +1,13 @@
 from discordrp import Presence
 import time
 import os
-import requests
 
 def connect(Client_id):
     presence = Presence(Client_id)
 
     class Wrapper:
         def update(self, pid=None, state=None, details=None, start=None, end=None, large_image=None, large_text=None, small_image=None, small_text=None, party_id=None, party_size=None, join=None, spectate=None, match=None, buttons=None, type=None):
+            #Aqui onde coloca coisas importantes caso não foram colocados
             if start is None:
                 start = int(time.time())
             if pid is None:
@@ -17,6 +17,7 @@ def connect(Client_id):
             if isinstance(end, (int, float)):
                 timestamps["end"] = int(end)
 
+            #Aqui onde organiza para colocar no dicionario
             assets = {}
             if large_image: assets["large_image"] = large_image
             if large_text: assets["large_text"] = large_text
@@ -46,7 +47,7 @@ def connect(Client_id):
             if type is not None: dic["type"] = type
 
             #Onde analisa se tem algum erro
-            if dic["secrets"] and buttons:
+            if dic.get("secrets") and buttons:
                 print("Error: existe botões e secrets")
                 return
             if type in (1, 4):
